@@ -43,10 +43,10 @@ public class DishService {
 
     @Transactional(readOnly = true)
     public DishResponse getById(String id) {
-        Dish dish = dishRepository.findById(id)
-                .filter(dish -> dish.getStatus() != DishStatus.DELETED)
+        Dish dishEntity = dishRepository.findById(id)
+                .filter(existing -> existing.getStatus() != DishStatus.DELETED)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Dish not found"));
-        return DishResponse.from(dish);
+        return DishResponse.from(dishEntity);
     }
 
     @Transactional
